@@ -21,9 +21,10 @@ import           Types.User
 import           Types.Username
 import           UI.Bootstrap.Button
 import           UI.Bootstrap.Form
+import           UI.Bootstrap.Pane
 
 widgetLogin ∷ (MonadWidget t m) ⇒ m (Event t (Maybe User))
-widgetLogin = do
+widgetLogin = smallPane $ do
     el "h2" $ do
         text "Login"
 

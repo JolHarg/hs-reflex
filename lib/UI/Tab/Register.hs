@@ -2,9 +2,7 @@
 {-# LANGUAGE KindSignatures            #-}
 {-# LANGUAGE MonoLocalBinds            #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-
 {-# LANGUAGE OverloadedStrings         #-}
-
 
 module UI.Tab.Register where
 
@@ -12,9 +10,10 @@ import           Reflex.Dom
 import           Types.User
 import           UI.Bootstrap.Button
 import           UI.Bootstrap.Form
+import           UI.Bootstrap.Pane
 
 widgetRegister ∷ (MonadWidget t m) ⇒ m (Event t (Maybe User))
-widgetRegister = do
+widgetRegister = smallPane $ do
     el "h2" $ do
         text "Register"
     do

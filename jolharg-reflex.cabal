@@ -18,6 +18,7 @@ library
                      , UI.Bootstrap.Button
                      , UI.Bootstrap.Form
                      , UI.Bootstrap.Modal
+                     , UI.Bootstrap.Pane
                      , UI.Bootstrap.TabbedNav
                      , UI.Tab.Login
                      , UI.Tab.Register
