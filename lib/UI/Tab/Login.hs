@@ -23,17 +23,17 @@ import           UI.Bootstrap.Button
 import           UI.Bootstrap.Form
 import           UI.Bootstrap.Pane
 
-widgetLogin ∷ (MonadWidget t m) ⇒ m (Event t (Maybe User))
+widgetLogin ∷ MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetLogin = smallPane $ do
     el "h2" $ do
         text "Login"
 
     loginResult' <- mdo
-        dynUsername <- inputBox "username" "Username" "bob" Prelude.id
-        dynPassword <- passwordBox "password" "Password" "abc123" Prelude.id
+        dynUsername <- divClass "my-2" $ inputBox "username" "Username" "bob" Prelude.id
+        dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
         let val_username = _inputElement_value dynUsername
         let val_password = _inputElement_value dynPassword
-        evtClickLoginButton <- bsButton "btn btn-success" "Login"
+        evtClickLoginButton <- divClass "my-3" $ bsButton "btn btn-success" "Login"
 
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
 
