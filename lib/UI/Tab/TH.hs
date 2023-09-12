@@ -10,19 +10,19 @@
 
 module UI.Tab.TH where
 
-import           Data.Map                (Map)
-import qualified Data.Map                as M
-import           Data.Model
-import           Data.Proxy
-import           Data.Text               (Text)
-import           Data.ToMap.Class
-import           Reflex.Dom
-import           Service.API
-import           Types.API.Companies
-import           UI.Bootstrap.Button
-import           UI.Modal.Companies.Add
-import           UI.Modal.Companies.Edit
-import           UI.Table.Companies
+import Data.Map                (Map)
+import Data.Map qualified as M
+import Data.Model
+import Data.Proxy
+import Data.Text               (Text)
+import Data.ToMap.Class
+import Reflex.Dom
+import Service.API
+import Types.API.Companies
+import UI.Bootstrap.Button
+import UI.Modal.Companies.Add
+import UI.Modal.Companies.Edit
+import UI.Table.Companies
 
 widgetTH ∷ (MonadWidget t m) ⇒ Model → (Dynamic t (Map Text (Map Text Text)) →
   m (Dynamic t (Map Text (
