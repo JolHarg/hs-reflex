@@ -4,10 +4,10 @@
 
 module UI.Bootstrap.Modal where
 
-import           Data.Map
-import           Data.Text
-import           Reflex.Dom
-import           UI.Bootstrap.Form
+import Data.Map
+import Data.Text
+import Reflex.Dom
+import UI.Bootstrap.Form
 
 modalWrapper ∷ (MonadWidget t m) ⇒ m a → m a
 modalWrapper = divClass "modal-dialog" . divClass "modal-content"

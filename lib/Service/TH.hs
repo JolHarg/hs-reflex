@@ -5,11 +5,11 @@
 
 module Service.TH where
 
-import           Data.Kind
-import           Data.Model
-import           Data.Proxy
-import           Language.Haskell.TH
-import           Servant.Reflex
+import Data.Kind
+import Data.Model
+import Data.Proxy
+import Language.Haskell.TH
+import Servant.Reflex
 
 get ∷ Model → Q Exp
 get Model { modelName } = [|

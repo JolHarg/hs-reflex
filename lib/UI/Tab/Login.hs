@@ -10,18 +10,18 @@
 
 module UI.Tab.Login where
 
-import           Control.Monad
-import           Reflex.Dom
-import           Servant.API
-import           Servant.Reflex
-import           Service.Auth
-import           Types.Login
-import           Types.Password
-import           Types.User
-import           Types.Username
-import           UI.Bootstrap.Button
-import           UI.Bootstrap.Form
-import           UI.Bootstrap.Pane
+import Control.Monad
+import Reflex.Dom
+import Servant.API
+import Servant.Reflex
+import Service.Auth
+import Types.Login
+import Types.Password
+import Types.User
+import Types.Username
+import UI.Bootstrap.Button
+import UI.Bootstrap.Form
+import UI.Bootstrap.Pane
 
 widgetLogin ∷ MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetLogin = smallPane $ do

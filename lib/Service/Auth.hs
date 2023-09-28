@@ -3,12 +3,12 @@
 
 module Service.Auth where
 
-import           Control.Monad.IO.Class
-import           Data.Kind
-import           Data.Proxy
-import           Reflex.Dom             hiding (Client)
-import           Servant.Reflex
-import           Types.API.Auth
+import Control.Monad.IO.Class
+import Data.Kind
+import Data.Proxy
+import Reflex.Dom             hiding (Client)
+import Servant.Reflex
+import Types.API.Auth
 
 login ∷ (MonadIO (Performable m), PerformEvent t m, TriggerEvent t m) ⇒ Client t m LoginAPI ()
 login = client

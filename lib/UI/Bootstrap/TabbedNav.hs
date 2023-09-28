@@ -5,8 +5,8 @@
 
 module UI.Bootstrap.TabbedNav where
 
-import           Data.Text
-import           Reflex.Dom
+import Data.Text
+import Reflex.Dom
 
 type Title = Text
 type DefaultValue = Text

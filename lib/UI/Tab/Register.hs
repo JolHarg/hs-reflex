@@ -6,11 +6,11 @@
 
 module UI.Tab.Register where
 
-import           Reflex.Dom
-import           Types.User
-import           UI.Bootstrap.Button
-import           UI.Bootstrap.Form
-import           UI.Bootstrap.Pane
+import Reflex.Dom
+import Types.User
+import UI.Bootstrap.Button
+import UI.Bootstrap.Form
+import UI.Bootstrap.Pane
 
 widgetRegister ∷ MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetRegister = smallPane $ do

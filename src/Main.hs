@@ -5,10 +5,10 @@
 module Main where
 
 -- import           Language.Haskell.TH
-import           Reflex.Dom
+import Reflex.Dom
 -- import           System.Environment
-import           UI.Head
-import           UI.MainWidget
+import UI.Head
+import UI.MainWidget
 
 main ∷ IO ()
 main = do

@@ -3,14 +3,14 @@
 
 module Service.XSRF where
 
-import           Control.Lens
-import           Data.Text.Encoding as T
-import           GHCJS.DOM          (currentDocumentUnchecked)
-import           GHCJS.DOM.Document
-import           GHCJS.DOM.Types    (liftJSM)
-import           Reflex.Dom
-import           Servant.Reflex
-import           Web.Cookie
+import Control.Lens
+import Data.Text.Encoding as T
+import GHCJS.DOM          (currentDocumentUnchecked)
+import GHCJS.DOM.Document
+import GHCJS.DOM.Types    (liftJSM)
+import Reflex.Dom
+import Servant.Reflex
+import Web.Cookie
 
 xsrfOptions ∷ ClientOptions
 xsrfOptions = ClientOptions tweakReq
