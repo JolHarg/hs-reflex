@@ -4,8 +4,8 @@
 
 module UI.Head where
 
-import           Data.Text
-import           Reflex.Dom
+import Data.Text
+import Reflex.Dom
 
 htmlHead ∷ MonadWidget t m ⇒ m ()
 htmlHead = do
