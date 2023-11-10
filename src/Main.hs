@@ -2,7 +2,7 @@
 -- {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wno-type-defaults -Wno-unused-matches -Wno-unused-local-binds #-}
 
-module Main where
+module Main (main) where
 
 -- import           Language.Haskell.TH
 import Reflex.Dom
