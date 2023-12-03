@@ -11,9 +11,9 @@ htmlHead ∷ MonadWidget t m ⇒ m ()
 htmlHead = do
   elAttr
     "link"
-    [ ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"),
+    [ ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"),
       ("rel", "stylesheet"),
-      ("integrity", "sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"),
+      ("integrity", "sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"),
       ("crossorigin", "anonymous")
     ]
     blank
