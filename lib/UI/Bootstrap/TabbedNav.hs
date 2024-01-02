@@ -19,23 +19,27 @@ bsTabbedNav ∷ (MonadWidget t m) ⇒ Title → DefaultValue → Items m a → m
 bsTabbedNav theTitle defaultVal items = mdo
     dNav <- holdDyn defaultVal eNavClick
     eNavClick <- divClass "navbar-collapse" .
-        elClass "nav" "navbar-expand-lg navbar-light bg-light" .
-            elClass "ul" "nav navbar-nav" $ do
+        elClass "nav" "navbar-expand-lg bg-light" $ do
+            elClass "div" "container-fluid" .
                 elAttr "a" [
                     ("class", "navbar-brand"),
                     ("href", "javascript:void()")
                     ] $ text theTitle
-                buttons <- mapM (\(val, btnText, _) -> do
-                    (btn, _) <- elDynAttr' "a" (
-                        (\n -> [
-                            ("class", "nav-link" <> if n == val then " active" else ""),
-                            ("href", "javascript:void()")
-                            ]
-                        ) <$> dNav
-                        ) $ text btnText
-                    pure $ val <$ domEvent Click btn
-                    ) items
-                pure $ mconcat buttons
+            elClass "div" "collapse navbar-collapse" .
+                elClass "ul" "nav navbar-nav" $ do
+                    buttons <- mapM (\(val, btnText, _) -> do
+                        (btn, _) <- elAttr "li" [
+                            ("class", "nav-item")
+                            ] . elDynAttr' "a" (
+                                (\n -> [
+                                    ("class", "nav-link" <> if n == val then " active" else ""),
+                                    ("href", "javascript:void()")
+                                    ]
+                                ) <$> dNav
+                            ) $ text btnText
+                        pure $ val <$ domEvent Click btn
+                        ) items
+                    pure $ mconcat buttons
     divClass "row" . divClass "col" .
         divClass "tab-content" $ mapM (\(val, _, content) ->
             elDynAttr "div" (
