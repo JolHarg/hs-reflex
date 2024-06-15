@@ -18,15 +18,14 @@ type Items m a = [Item m a]
 bsTabbedNav ∷ (MonadWidget t m) ⇒ Title → DefaultValue → Items m a → m [a]
 bsTabbedNav theTitle defaultVal items = mdo
     dNav <- holdDyn defaultVal eNavClick
-    eNavClick <- divClass "navbar-collapse" .
-        elClass "nav" "navbar-expand-lg bg-light" $ do
-            elClass "div" "container-fluid" .
-                elAttr "a" [
-                    ("class", "navbar-brand"),
-                    ("href", "javascript:void()")
-                    ] $ text theTitle
+    eNavClick <- elClass "nav" "navbar navbar-expand-lg bg-light" $ do
+        elClass "div" "container-fluid" $ do
+            elAttr "a" [
+                ("class", "navbar-brand"),
+                ("href", "javascript:void()")
+                ] $ text theTitle
             elClass "div" "collapse navbar-collapse" .
-                elClass "ul" "nav navbar-nav" $ do
+                elClass "ul" "navbar-nav" $ do
                     buttons <- mapM (\(val, btnText, _) -> do
                         (btn, _) <- elAttr "li" [
                             ("class", "nav-item")

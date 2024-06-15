@@ -11,9 +11,9 @@ htmlHead ∷ MonadWidget t m ⇒ m ()
 htmlHead = do
   elAttr
     "link"
-    [ ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"),
+    [ ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"),
       ("rel", "stylesheet"),
-      ("integrity", "sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"),
+      ("integrity", "sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"),
       ("crossorigin", "anonymous")
     ]
     blank
@@ -37,9 +37,9 @@ htmlHead = do
   elAttr "meta" [("http-equiv", "X-Who-Is-Awesome: Raven")] blank
   mapM_ (\(name', content') -> elAttr "meta" [("name", name'), ("content", content')] blank) ([
     ("description", "JolHarg JobFinder helps you find and organise jobs."),
-    ("keywords", intercalate "," ["jolharg", "jobfinder"]),
+    -- ("keywords", intercalate "," ["jolharg", "jobfinder"]),
     ("Content-Type", "text/html; charset=utf-8"),
-    ("Who-is-awesome", "Raven"),
+    ("X-Who-Is-Baby", "Raven"),
     ("X-UA-Compatible", "IE=edge,chrome=1"),
     ("viewport", "width=device-width, initial-scale=1"),
     ("favicon", "/jh.png")
