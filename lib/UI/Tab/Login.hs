@@ -42,11 +42,12 @@ widgetLogin = smallPane $ do
             ]
             (maybe "" (\response' -> if
             | _xhrResponse_status response' == 500 -> "Sorry, the server is having a tizzy. Maybe try again in a bit."
-            | _xhrResponse_status response' == 502 -> "Sorry, the server was unavailable. Maybe try again in a bit."
+            | _xhrResponse_status response' == 502 -> "Sorry, the server doesn't look like it's running. Maybe try again in a bit."
+            | _xhrResponse_status response' == 503 -> "Sorry, the server is too busy. Maybe try again in a bit."
             | otherwise -> ""
             ) <$> dynResponse)
 
-        let dynCredentials = pure <$> (Login <$> (Username <$> val_username) <*> (Password <$> val_password))
+        let dynCredentials = pure <$> ((Login . Username <$> val_username) <*> (Password <$> val_password))
 
         loginResult <- login dynCredentials evtClickLoginButton
 

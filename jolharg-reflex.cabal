@@ -58,9 +58,12 @@ library
     -Wno-missing-import-lists -Wno-missing-export-lists
     -Wno-implicit-prelude -Wno-missing-safe-haskell-mode
     -Wno-all-missed-specialisations -Wno-missed-specialisations
+    -Wno-missing-role-annotations -Wno-missing-kind-signatures
+    -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags
+    -Wno-missed-specialisations
 
   -- these don't work on ghcjs yet
-  -- -Wno-missing-kind-signatures
+  -- -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures
   -- -Wno-missing-local-signatures
   cpp-options:        -DGHCJS_BROWSER
   hs-source-dirs:     lib
@@ -86,16 +89,23 @@ test-suite jolharg-reflex-test
   main-is:            Spec.hs
 
   if !arch(wasm32)
-    ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N -Wno-all-missed-specialisations -Wno-missed-specialisations
+    ghc-options:
+      -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+      -Wno-all-missed-specialisations -Wno-missed-specialisations
+
+    -wno-missing-role-annotations -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags -Wno-missed-specialisations
 
   ghc-options:
     -Wall -Werror -Weverything -Wno-unsafe -Wno-safe
     -Wno-missing-import-lists -Wno-missing-export-lists
     -Wno-implicit-prelude -Wno-missing-safe-haskell-mode
     -Wno-all-missed-specialisations -Wno-missed-specialisations
+    -Wno-missing-role-annotations -Wno-missing-kind-signatures
+    -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags
+    -Wno-missed-specialisations
 
   -- these don't work on ghcjs yet
-  -- -Wno-missing-kind-signatures
+  -- -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures
   -- -Wno-missing-local-signatures
   cpp-options:        -DGHCJS_BROWSER
   build-depends:
