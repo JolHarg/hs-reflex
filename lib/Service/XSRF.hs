@@ -4,11 +4,10 @@
 module Service.XSRF where
 
 import Control.Lens
-import Control.Monad.IO.Class
 import Data.Text.Encoding     as T
-import GHCJS.DOM              (currentDocumentUnchecked)
-import GHCJS.DOM.Document
-import GHCJS.DOM.Types        (liftJSM)
+import JSDOM              (currentDocumentUnchecked)
+import JSDOM.Document
+import JSDOM.Types        (MonadJSM, liftJSM)
 import Reflex.Dom
 import Servant.Reflex
 import Web.Cookie
@@ -16,7 +15,7 @@ import Web.Cookie
 xsrfOptions ∷ ClientOptions
 xsrfOptions = ClientOptions tweakReq
     where
-        tweakReq ∷ MonadIO m ⇒ XhrRequest a → m (XhrRequest a)
+        tweakReq ∷ MonadJSM m ⇒ XhrRequest a → m (XhrRequest a)
         tweakReq r = do
             -- Get the XHR-COOKIE if set
             let getToken = lookup "XSRF-TOKEN" . parseCookiesText . T.encodeUtf8

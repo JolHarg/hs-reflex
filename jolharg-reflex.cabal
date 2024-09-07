@@ -35,11 +35,11 @@ library
     , base                      >=4.12 && <5
     , containers
     , cookie
-    , ghcjs-dom
     , jolharg-models
     , jolharg-servant-examples
     , jolharg-web-models
     , jolharg-web-types
+    , jsaddle-dom
     , lens
     , reflex-dom
     , servant
@@ -60,7 +60,7 @@ library
     -Wno-all-missed-specialisations -Wno-missed-specialisations
     -Wno-missing-role-annotations -Wno-missing-kind-signatures
     -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags
-    -Wno-missed-specialisations
+    -Wno-missed-specialisations -Wno-prepositive-qualified-module
 
   -- these don't work on ghcjs yet
   -- -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures
@@ -92,6 +92,7 @@ test-suite jolharg-reflex-test
     ghc-options:
       -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
       -Wno-all-missed-specialisations -Wno-missed-specialisations
+      -Wno-prepositive-qualified-module
       -Wno-missing-role-annotations -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags -Wno-missed-specialisations
 
   ghc-options:
@@ -101,7 +102,7 @@ test-suite jolharg-reflex-test
     -Wno-all-missed-specialisations -Wno-missed-specialisations
     -Wno-missing-role-annotations -Wno-missing-kind-signatures
     -Wno-missing-poly-kind-signatures -Wno-unrecognised-warning-flags
-    -Wno-missed-specialisations
+    -Wno-missed-specialisations -Wno-prepositive-qualified-module
 
   -- these don't work on ghcjs yet
   -- -Wno-missing-kind-signatures -Wno-missing-poly-kind-signatures
