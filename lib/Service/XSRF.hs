@@ -4,7 +4,7 @@
 module Service.XSRF where
 
 import Control.Lens
-import Data.Text.Encoding     as T
+import Data.Text.Encoding as T
 import JSDOM              (currentDocumentUnchecked)
 import JSDOM.Document
 import JSDOM.Types        (MonadJSM, liftJSM)

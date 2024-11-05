@@ -5,8 +5,8 @@ module Service.Auth where
 
 import Data.Kind
 import Data.Proxy
-import JSDOM.Types        (MonadJSM)
-import Reflex.Dom             hiding (Client)
+import JSDOM.Types    (MonadJSM)
+import Reflex.Dom     hiding (Client)
 import Servant.Reflex
 import Types.API.Auth
 
