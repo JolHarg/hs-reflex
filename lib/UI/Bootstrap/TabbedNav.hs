@@ -6,6 +6,7 @@
 module UI.Bootstrap.TabbedNav where
 
 import Data.Text
+import Data.Traversable
 import Reflex.Dom
 
 type Title = Text
@@ -26,7 +27,7 @@ bsTabbedNav theTitle defaultVal items = mdo
                 ] $ text theTitle
             elClass "div" "collapse navbar-collapse" .
                 elClass "ul" "navbar-nav" $ do
-                    buttons <- mapM (\(val, btnText, _) -> do
+                    buttons <- traverse (\(val, btnText, _) -> do
                         (btn, _) <- elAttr "li" [
                             ("class", "nav-item")
                             ] . elDynAttr' "a" (
@@ -40,7 +41,7 @@ bsTabbedNav theTitle defaultVal items = mdo
                         ) items
                     pure $ mconcat buttons
     divClass "row" . divClass "col" .
-        divClass "tab-content" $ mapM (\(val, _, content) ->
+        divClass "tab-content" $ traverse (\(val, _, content) ->
             elDynAttr "div" (
                 (\n -> [
                     ("class", "tab-pane fade" <> if n == val then " show active" else "")

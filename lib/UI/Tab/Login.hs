@@ -38,7 +38,7 @@ widgetLogin = smallPane $ do
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
 
         -- @TODO icon https://getbootstrap.com/docs/5.3/components/alerts/
-        _ <- elDynHtmlAttr' "div" [
+        void $ elDynHtmlAttr' "div" [
                 ("class", "text-danger")
             ]
             (maybe "" (\response' -> if

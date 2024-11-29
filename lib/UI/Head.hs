@@ -4,6 +4,7 @@
 
 module UI.Head where
 
+import Data.Foldable
 import Data.Text
 import Reflex.Dom
 
@@ -35,7 +36,7 @@ htmlHead = do
     ]
     blank
   elAttr "meta" [("http-equiv", "X-Who-Is-Awesome: Raven")] blank
-  mapM_ (\(name', content') -> elAttr "meta" [("name", name'), ("content", content')] blank) ([
+  traverse_ (\(name', content') -> elAttr "meta" [("name", name'), ("content", content')] blank) ([
     ("description", "JolHarg JobFinder helps you find and organise jobs."),
     -- ("keywords", intercalate "," ["jolharg", "jobfinder"]),
     ("Content-Type", "text/html; charset=utf-8"),

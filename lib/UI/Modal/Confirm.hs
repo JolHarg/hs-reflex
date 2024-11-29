@@ -5,7 +5,6 @@
 
 module UI.Modal.Confirm where
 
-import Control.Monad          (void)
 import Control.Monad.IO.Class
 import Data.Text              (unpack)
 import Data.Time.Clock
