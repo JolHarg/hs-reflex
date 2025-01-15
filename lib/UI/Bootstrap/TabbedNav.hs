@@ -6,7 +6,6 @@
 module UI.Bootstrap.TabbedNav where
 
 import Data.Text
-import Data.Traversable
 import Reflex.Dom
 
 type Title = Text
