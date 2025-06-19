@@ -1,4 +1,3 @@
-{-# LANGUAGE MonoLocalBinds    #-}
 {-# LANGUAGE OverloadedLists   #-}
 {-# LANGUAGE OverloadedStrings #-}
 

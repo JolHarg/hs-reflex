@@ -1,4 +1,3 @@
-{-# LANGUAGE MonoLocalBinds #-}
 -- {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wno-type-defaults -Wno-unused-matches -Wno-unused-local-binds #-}
 

@@ -1,7 +1,3 @@
-{-# LANGUAGE FlexibleContexts          #-}
-{-# LANGUAGE KindSignatures            #-}
-{-# LANGUAGE MonoLocalBinds            #-}
-{-# LANGUAGE NamedFieldPuns            #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedLists           #-}
 {-# LANGUAGE OverloadedStrings         #-}
