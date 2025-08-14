@@ -7,7 +7,7 @@ import Data.Text
 import Reflex.Dom
 
 form ∷ MonadWidget t m ⇒ m a → m a
-form = el "form"
+form = elAttr "form" [("class", "needs-validation"), ("no-validate", "")]
 
 formGroup ∷ MonadWidget t m ⇒ m a → m a
 formGroup = divClass "form-group"
@@ -16,6 +16,7 @@ inputBoxConfig ∷ Text → Text → InputElementConfig e t s → InputElementCo
 inputBoxConfig id' placeholder = inputElementConfig_elementConfig . elementConfig_initialAttributes .~ [
   ("id", id'),
   ("class", "form-control"),
+  ("required", ""),
   ("placeholder", placeholder)
   ]
 
@@ -24,6 +25,7 @@ passwordBoxConfig id' placeholder = inputElementConfig_elementConfig . elementCo
   ("id", id'),
   ("type", "password"),
   ("class", "form-control"),
+  ("required", ""),
   ("placeholder", placeholder)
   ]
 

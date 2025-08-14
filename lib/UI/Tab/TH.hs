@@ -26,7 +26,7 @@ widgetTH ∷ MonadWidget t m ⇒ Model → (Dynamic t (Map Text (Map Text Text))
       (Event t (), Event t Text)
     ]
   )))) → m ()
-widgetTH model@Model { modelName, endpoint } tableGen = mdo
+widgetTH model@Model { singularType, singularEndpoint } tableGen = mdo
   -- remember you can do :<|> in your let
   epb <- getPostBuild
 

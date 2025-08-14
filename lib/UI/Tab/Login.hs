@@ -25,9 +25,9 @@ widgetLogin = smallPane $ do
         text "Login"
 
     loginResult' <- mdo
-        dynUsername <- divClass "my-2" $ inputBox "username" "Username" "bob" Prelude.id
+        dynLogin <- divClass "my-2" $ inputBox "login" "Username or email address" "bob" Prelude.id
         dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
-        let val_username = _inputElement_value dynUsername
+        let val_login = _inputElement_value dynLogin
         let val_password = _inputElement_value dynPassword
         evtClickLoginButton <- divClass "my-3" $ bsButton "btn btn-success" "Login"
 
@@ -38,16 +38,16 @@ widgetLogin = smallPane $ do
                 ("class", "text-danger")
             ]
             (maybe "" (\response' -> if
+            -- todo get the message inside and display it if there's something else.
+            | _xhrResponse_status response' == 403 -> "Hmm, that doesn't look right..." -- todo you're not allowed in
             | _xhrResponse_status response' == 500 -> "Sorry, the server is having a tizzy. Maybe try again in a bit."
             | _xhrResponse_status response' == 502 -> "Sorry, the server doesn't look like it's running. Maybe try again in a bit."
             | _xhrResponse_status response' == 503 -> "Sorry, the server is too busy. Maybe try again in a bit."
             | otherwise -> ""
             ) <$> dynResponse)
 
-        let dynCredentials = pure <$> ((Login . Username <$> val_username) <*> (Password <$> val_password))
+        let dynCredentials = pure <$> ((Login . Username <$> val_login) <*> (Password <$> val_password))
 
-        loginResult <- login dynCredentials evtClickLoginButton
-
-        pure loginResult
+        Service.Auth.login dynCredentials evtClickLoginButton
 
     pure $ fmap (getResponse <=< reqSuccess) loginResult'
