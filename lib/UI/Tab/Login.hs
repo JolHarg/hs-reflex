@@ -7,6 +7,7 @@
 module UI.Tab.Login where
 
 import Control.Monad
+-- import Data.Text qualified as T
 import Reflex.Dom
 import Servant.API
 import Servant.Reflex
@@ -18,18 +19,19 @@ import Types.Username
 import UI.Bootstrap.Button
 import UI.Bootstrap.Form
 import UI.Bootstrap.Pane
+-- import Web.Cookie
 
-widgetLogin ∷ MonadWidget t m ⇒ m (Event t (Maybe User))
-widgetLogin = smallPane $ do
+widgetLogin ∷ forall t m. MonadWidget t m ⇒ m (Event t (Maybe User))
+widgetLogin = smallPane $ mdo
     el "h2" $ do
         text "Login"
 
-    loginResult' <- mdo
+    loginResult' <- form $ mdo
         dynLogin <- divClass "my-2" $ inputBox "login" "Username or email address" "bob" Prelude.id
         dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
         let val_login = _inputElement_value dynLogin
         let val_password = _inputElement_value dynPassword
-        evtClickLoginButton <- divClass "my-3" $ bsButton "btn btn-success" "Login"
+        evtClickLoginButton <- divClass "my-3" $ bsSubmit "btn btn-success" "Login"
 
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
 
@@ -48,6 +50,10 @@ widgetLogin = smallPane $ do
 
         let dynCredentials = pure <$> ((Login . Username <$> val_login) <*> (Password <$> val_password))
 
-        Service.Auth.login dynCredentials evtClickLoginButton
+        loginResult <- Service.Auth.login dynCredentials evtClickLoginButton
 
-    pure $ fmap (getResponse <=< reqSuccess) loginResult'
+        pure loginResult
+
+    pure $ fmap getResponse $ fmapMaybe reqSuccess $ loginResult'
+
+    -- maybe the result shouldn't be maybe if it's 200 anyway

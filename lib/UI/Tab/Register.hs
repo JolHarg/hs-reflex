@@ -32,9 +32,9 @@ widgetRegister = largePane $ do
             input <- divClass "my-3" $ inputBox "fullName" "Full Name *" "Bob Frog" Prelude.id -- TODO add is-invalid from server
             divClass "invalid-feedback" $ text "You must provide this field."
             pure input
-        _dynGivenName <- formGroup $ do
-            input <- divClass "my-3" $ inputBox "givenName" "What should we should call you?" "Bob" Prelude.id
-            elAttr "small" [("id", "given_name_help"), ("class", "form-text text-muted")] $
+        _dynChosenName <- formGroup $ do
+            input <- divClass "my-3" $ inputBox "chosenName" "What should we should call you?" "Bob" Prelude.id
+            elAttr "small" [("id", "chosen_name_help"), ("class", "form-text text-muted")] $
                 text "This will only be used to address you in communication, and defaults to your full name if you don't enter anything."
             pure input
         _dynPassword <- formGroup $ do
@@ -81,7 +81,7 @@ widgetRegister = largePane $ do
                 pure input
         el "hr" blank
         _dynRegisterButton <- formGroup $ do
-            divClass "my-3" $ bsButton "btn btn-success" "Register"
+            divClass "my-3" $ bsSubmit "btn btn-success" "Register"
         -- here comes a reasonable place for non form specific errors
         pure ()
     pure never

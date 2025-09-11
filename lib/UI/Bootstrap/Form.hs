@@ -3,11 +3,12 @@
 
 module UI.Bootstrap.Form where
 
+import Data.Map   (Map)
 import Data.Text
 import Reflex.Dom
 
 form ∷ MonadWidget t m ⇒ m a → m a
-form = elAttr "form" [("class", "needs-validation"), ("no-validate", "")]
+form = elAttr "form" [("class", "needs-validation"), ("no-validate", ""), ("action", "javascript:void()")]
 
 formGroup ∷ MonadWidget t m ⇒ m a → m a
 formGroup = divClass "form-group"
@@ -29,14 +30,13 @@ passwordBoxConfig id' placeholder = inputElementConfig_elementConfig . elementCo
   ("placeholder", placeholder)
   ]
 
-{-}
-dropdownConfig ∷ Text → Text → DropdownConfig t k → DropdownConfig t k
-dropdownConfig id' placeholder = dropdownConfig_elementConfig . _dropdownConfig_attributes .~ [
+dropdownConfig ∷ Reflex t => Text → Text → DropdownConfig t k → DropdownConfig t k
+dropdownConfig id' placeholder = \x -> x & attributes .~ constDyn [
   ("id", id'),
   ("class", "form-control"),
+  ("required", ""),
   ("placeholder", placeholder)
   ]
--}
 
 inputBox ∷ (DomSpace s, MonadWidget t m) ⇒ Text → Text → Text →
     (InputElementConfig EventResult t s → InputElementConfig EventResult t GhcjsDomSpace) →
@@ -48,7 +48,7 @@ inputBox id' label placeholder config = formGroup $ do
     & config
 
 passwordBox ∷ (DomSpace s, MonadWidget t m) ⇒ Text → Text → Text →
-    (InputElementConfig EventResult t s → InputElementConfig EventResult t GhcjsDomSpace) →
+    (InputElementConfig EventResult t s → InputElementConfig EventResult t (DomBuilderSpace m)) →
     m (InputElement EventResult (DomBuilderSpace m) t)
 passwordBox id' label placeholder config = formGroup $ do
   elAttr "label" [("for", id')] $ text label
@@ -56,11 +56,9 @@ passwordBox id' label placeholder config = formGroup $ do
     & passwordBoxConfig id' placeholder
     & config
 
--- dropdownBox ∷ (DomSpace s, MonadWidget t m) ⇒ Text → Text → Text →
---     (InputElementConfig EventResult t s → InputElementConfig EventResult t GhcjsDomSpace) →
---     m (InputElement EventResult (DomBuilderSpace m) t)
-{-}
-dropdownBox id' label placeholder defaultId dynMapIdToValues config = formGroup $ do
+dropdownBox ∷ (MonadWidget t m, Ord k) ⇒ Text → Text → k → Dynamic t (Map k Text) →
+    (DropdownConfig t k -> DropdownConfig t k) →
+    m (Dropdown t k)
+dropdownBox id' label defaultId dynMapIdToValues config = formGroup $ do
   elAttr "label" [("for", id')] $ text label
-  dropdown defaultId dynMapIdToValues config
--}
+  dropdown defaultId dynMapIdToValues (def & (dropdownConfig id' "Choose...") . config)

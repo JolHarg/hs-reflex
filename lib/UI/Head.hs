@@ -34,7 +34,7 @@ htmlHead = do
     [ ("charset", "utf-8")
     ]
     blank
-  elAttr "meta" [("http-equiv", "X-Who-Is-Awesome: Raven")] blank
+  elAttr "meta" [("http-equiv", "X-Who-Is-Baby: Raven")] blank
   traverse_ (\(name', content') -> elAttr "meta" [("name", name'), ("content", content')] blank) ([
     ("description", "JolHarg JobFinder helps you find and organise jobs."),
     -- ("keywords", intercalate "," ["jolharg", "jobfinder"]),
