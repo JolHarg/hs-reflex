@@ -17,7 +17,7 @@ modalHeader title = divClass "modal-header" . elClass "h5" "modal-title" $ text 
 modalBody ∷ (MonadWidget t m) ⇒ m a → m a
 modalBody = divClass "modal-body"
 
-modalForm ∷ (MonadWidget t m) ⇒ m a → m a
+modalForm ∷ (MonadWidget t m) ⇒ m a → m (El t, a)
 modalForm = modalBody . form
 
 modalFooter ∷ (MonadWidget t m) ⇒ m a → m a

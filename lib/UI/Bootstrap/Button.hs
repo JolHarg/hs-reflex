@@ -6,12 +6,12 @@ module UI.Bootstrap.Button where
 import Data.Text
 import Reflex.Dom
 
-bsButton ∷ MonadWidget t m ⇒ Text → Text → m (Event t ())
+bsButton ∷ MonadWidget t m ⇒ Text → m () → m (Event t ())
 bsButton class' label = do
-    (buttonEl, _) <- elAttr' "button" [("class", class')] $ text label
+    (buttonEl, _) <- elAttr' "button" [("class", class')] label
     pure $ domEvent Click buttonEl
 
-bsSubmit ∷ MonadWidget t m ⇒ Text → Text → m (Event t ())
+bsSubmit ∷ MonadWidget t m ⇒ Text → m () → m (Event t ())
 bsSubmit class' label = do
-    (buttonEl, _) <- elAttr' "button" [("class", class'), ("type", "submit")] $ text label
+    (buttonEl, _) <- elAttr' "button" [("class", class'), ("type", "submit")] label
     pure $ domEvent Click buttonEl

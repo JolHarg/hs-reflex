@@ -7,8 +7,8 @@ import Data.Map   (Map)
 import Data.Text
 import Reflex.Dom
 
-form ∷ MonadWidget t m ⇒ m a → m a
-form = elAttr "form" [("class", "needs-validation"), ("no-validate", ""), ("action", "javascript:void()")]
+form ∷ MonadWidget t m ⇒ m a → m (El t, a)
+form = elAttr' "form" [("class", "needs-validation"), ("no-validate", ""), ("action", "javascript:void()")]
 
 formGroup ∷ MonadWidget t m ⇒ m a → m a
 formGroup = divClass "form-group"
@@ -62,3 +62,8 @@ dropdownBox ∷ (MonadWidget t m, Ord k) ⇒ Text → Text → k → Dynamic t (
 dropdownBox id' label defaultId dynMapIdToValues config = formGroup $ do
   elAttr "label" [("for", id')] $ text label
   dropdown defaultId dynMapIdToValues (def & (dropdownConfig id' "Choose...") . config)
+
+checkbox' ∷ MonadWidget t m ⇒ m (InputElement EventResult (DomBuilderSpace m) t)
+checkbox' = inputElement $ def & inputElementConfig_elementConfig
+  . elementConfig_initialAttributes
+  .~ [("type", "checkbox")]

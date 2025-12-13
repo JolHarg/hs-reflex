@@ -24,8 +24,8 @@ modalConfirm dynModalShown textConfirmation = elDynAttr "div" (modalClasses <$> 
       modalHeader "Confirmation"
       display textConfirmation
       (evtYes, evtNo) <- modalFooter $ do
-        evtYes <- bsButton "btn btn-primary" "Yes"
-        evtNo <- bsButton "btn btn-secondary" "No"
+        evtYes <- bsSubmit "btn btn-primary" $ text "Yes"
+        evtNo <- bsButton "btn btn-secondary" $ text "No"
 
         pure (evtYes, evtNo)
 

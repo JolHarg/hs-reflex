@@ -26,12 +26,12 @@ widgetLogin = smallPane $ mdo
     el "h2" $ do
         text "Login"
 
-    loginResult' <- form $ mdo
+    (_form, loginResult') <- form $ mdo
         dynLogin <- divClass "my-2" $ inputBox "login" "Username or email address" "bob" Prelude.id
         dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
         let val_login = _inputElement_value dynLogin
         let val_password = _inputElement_value dynPassword
-        evtClickLoginButton <- divClass "my-3" $ bsSubmit "btn btn-success" "Login"
+        evtClickLoginButton <- divClass "my-3" $ bsSubmit "btn btn-success" $ text "Login"
 
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
 

@@ -15,7 +15,7 @@ widgetRegister ∷ MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetRegister = largePane $ do
     el "h1" $ text "Register for JobFinder"
     el "p" $ text "Thank you for choosing to register with JobFinder. Please fill in your details below so we can get you into our system:"
-    form $ do -- checkValidity() -> add was-validated class for JS classes
+    (_form, _result) <- form $ do -- checkValidity() -> add was-validated class for JS classes
         _dynUsername <- formGroup . divClass "my-2" $ inputBox "username" "Username *" "bob" Prelude.id -- TODO add is-invalid from server
             -- here in small red: optional error, cover box with red border
         _dynEmail <- formGroup $ do
@@ -81,7 +81,7 @@ widgetRegister = largePane $ do
                 pure input
         el "hr" blank
         _dynRegisterButton <- formGroup $ do
-            divClass "my-3" $ bsSubmit "btn btn-success" "Register"
+            divClass "my-3" $ bsSubmit "btn btn-success" $ text "Register"
         -- here comes a reasonable place for non form specific errors
         pure ()
     pure never
