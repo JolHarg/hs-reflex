@@ -34,7 +34,7 @@ library
   -- , UI.Tab.TH
   -- other-extensions:
   build-depends:
-    , base                      >=4.21 && <4.23
+    , base                      ^>=4.22
     , containers                ^>=0.8
     , cookie                    ^>=0.5
     , jolharg-models            ^>=0.3
@@ -101,7 +101,7 @@ test-suite jolharg-reflex-test
 
   cpp-options:        -DGHCJS_BROWSER
   build-depends:
-    , base   >=4.21 && <4.23
+    , base   ^>=4.22
     , hspec  ^>=2.11.15
 
   -- , jolharg-reflex
