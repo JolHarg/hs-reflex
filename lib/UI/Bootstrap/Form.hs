@@ -8,7 +8,7 @@ import Data.Text
 import Reflex.Dom
 
 form ∷ MonadWidget t m ⇒ m a → m (El t, a)
-form = elAttr' "form" [("class", "needs-validation"), ("no-validate", ""), ("action", "javascript:void()")]
+form = elAttr' "form" [("class", "needs-validation"), ("no-validate", ""), ("action", "javascript:void()"), ("accept-charset", "utf-8")]
 
 formGroup ∷ MonadWidget t m ⇒ m a → m a
 formGroup = divClass "form-group"
