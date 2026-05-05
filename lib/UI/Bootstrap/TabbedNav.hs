@@ -17,7 +17,7 @@ type Items m a = [Item m a]
 bsTabbedNav ∷ (MonadWidget t m) ⇒ Title → DefaultValue → Items m a → m [a]
 bsTabbedNav theTitle defaultVal items = mdo
     dNav <- holdDyn defaultVal eNavClick
-    eNavClick <- elClass "nav" "navbar navbar-expand-lg bg-light" $ do
+    eNavClick <- elClass "nav" "navbar navbar-expand-lg bg-dark" $ do
         elClass "div" "container-fluid" $ do
             elAttr "a" [
                 ("class", "navbar-brand"),
