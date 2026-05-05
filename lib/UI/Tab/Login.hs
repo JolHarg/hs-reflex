@@ -24,14 +24,16 @@ import UI.Bootstrap.Pane
 widgetLogin ∷ forall t m. MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetLogin = smallPane $ mdo
     el "h2" $ do
-        text "Login"
+        text "Log into JobFinder"
+    el "p" $ do
+        text "Please enter your credentials to enter JobFinder."
 
     (_form, loginResult') <- form $ mdo
         dynLogin <- divClass "my-2" $ inputBox "login" "Username or email address" "bob" Prelude.id
         dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
         let val_login = _inputElement_value dynLogin
         let val_password = _inputElement_value dynPassword
-        evtClickLoginButton <- divClass "my-3" $ bsSubmit "btn btn-success" $ text "Login"
+        evtClickLoginButton <- divClass "my-3" . bsSubmit "btn btn-success" $ text "Login"
 
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
 
@@ -41,7 +43,8 @@ widgetLogin = smallPane $ mdo
             ]
             (maybe "" (\response' -> if
             -- todo get the message inside and display it if there's something else.
-            | _xhrResponse_status response' == 403 -> "Hmm, that doesn't look right..." -- todo you're not allowed in
+            | _xhrResponse_status response' == 401 -> "Hmm, that doesn't look right..."
+            | _xhrResponse_status response' == 403 -> "Sorry, you have been banned."
             | _xhrResponse_status response' == 500 -> "Sorry, the server is having a tizzy. Maybe try again in a bit."
             | _xhrResponse_status response' == 502 -> "Sorry, the server doesn't look like it's running. Maybe try again in a bit."
             | _xhrResponse_status response' == 503 -> "Sorry, the server is too busy. Maybe try again in a bit."
@@ -54,6 +57,12 @@ widgetLogin = smallPane $ mdo
 
         pure loginResult
 
-    pure $ fmap getResponse $ fmapMaybe reqSuccess $ loginResult'
+    el "p" $ do
+        elAttr "a" [("href", "#forgot")] $ text "No account?"
+
+    el "p" $ do
+        elAttr "a" [("href", "#forgot")] $ text "Forgot your password?"
+
+    pure . fmap getResponse . fmapMaybe reqSuccess $ loginResult'
 
     -- maybe the result shouldn't be maybe if it's 200 anyway
