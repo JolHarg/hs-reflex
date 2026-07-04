@@ -6,8 +6,9 @@
 
 module UI.Tab.Login where
 
-import Control.Monad
+import Data.Map (Map)
 -- import Data.Text qualified as T
+import Data.Text (Text)
 import Reflex.Dom
 import Servant.API
 import Servant.Reflex
@@ -21,6 +22,21 @@ import UI.Bootstrap.Form
 import UI.Bootstrap.Pane
 -- import Web.Cookie
 
+responseToText :: XhrResponse -> Text
+responseToText response'
+    -- todo get the message inside and display it if there's something else.
+    | _xhrResponse_status response' == 401 = "Hmm, that doesn't look right..."
+    | _xhrResponse_status response' == 403 = "Whoops, couldn't authorise you."
+    | _xhrResponse_status response' == 500 = "Sorry, the server is having a tizzy. Maybe try again in a bit."
+    | _xhrResponse_status response' == 502 = "Sorry, the server doesn't look like it's running. Maybe try again in a bit."
+    | _xhrResponse_status response' == 503 = "Sorry, the server is too busy. Maybe try again in a bit."
+    | otherwise = ""
+
+responseToAlertAttrs :: XhrResponse -> Map Text Text
+responseToAlertAttrs response'
+    | _xhrResponse_status response' > 400 = [("class", "alert alert-danger"), ("role", "alert")]
+    | otherwise = []
+
 widgetLogin ∷ forall t m. MonadWidget t m ⇒ m (Event t (Maybe User))
 widgetLogin = smallPane $ mdo
     el "h2" $ do
@@ -29,27 +45,25 @@ widgetLogin = smallPane $ mdo
         text "Please enter your credentials to enter JobFinder."
 
     (_form, loginResult') <- form $ mdo
-        dynLogin <- divClass "my-2" $ inputBox "login" "Username or email address" "bob" Prelude.id
-        dynPassword <- divClass "my-2" $ passwordBox "password" "Password" "abc123" Prelude.id
+        dynLogin <- divClass "my-2" $ inputBox def {
+            inputBoxId = "login",
+            inputBoxLabel =  "Username or email address",
+            inputBoxPlaceholder = "bob"
+        }
+        dynPassword <- divClass "my-2" $ inputBox def {
+            inputBoxId = "password",
+            inputBoxType = "password",
+            inputBoxLabel = "Password",
+            inputBoxPlaceholder = "abc123"
+        }
         let val_login = _inputElement_value dynLogin
         let val_password = _inputElement_value dynPassword
         evtClickLoginButton <- divClass "my-3" . bsSubmit "btn btn-success" $ text "Login"
 
         dynResponse <- holdDyn Nothing $ fmapMaybe (Just . response) loginResult
-
-        -- @TODO icon https://getbootstrap.com/docs/5.3/components/alerts/
-        void $ elDynHtmlAttr' "div" [
-                ("class", "text-danger")
-            ]
-            (maybe "" (\response' -> if
-            -- todo get the message inside and display it if there's something else.
-            | _xhrResponse_status response' == 401 -> "Hmm, that doesn't look right..."
-            | _xhrResponse_status response' == 403 -> "Sorry, you have been banned."
-            | _xhrResponse_status response' == 500 -> "Sorry, the server is having a tizzy. Maybe try again in a bit."
-            | _xhrResponse_status response' == 502 -> "Sorry, the server doesn't look like it's running. Maybe try again in a bit."
-            | _xhrResponse_status response' == 503 -> "Sorry, the server is too busy. Maybe try again in a bit."
-            | otherwise -> ""
-            ) <$> dynResponse)
+        
+        -- maybe [] is clearer than foldMap here
+        elDynAttr "div" (maybe [] responseToAlertAttrs <$> dynResponse) (dynText (maybe "" responseToText <$> dynResponse))
 
         let dynCredentials = pure <$> ((Login . Username <$> val_login) <*> (Password <$> val_password))
 

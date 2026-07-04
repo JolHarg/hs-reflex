@@ -3,6 +3,7 @@
 
 module UI.Bootstrap.Form where
 
+import Data.Default
 import Data.Map   (Map)
 import Data.Text
 import Reflex.Dom
@@ -13,23 +14,6 @@ form = elAttr' "form" [("class", "needs-validation"), ("no-validate", ""), ("act
 formGroup ∷ MonadWidget t m ⇒ m a → m a
 formGroup = divClass "form-group"
 
-inputBoxConfig ∷ Text → Text → InputElementConfig e t s → InputElementConfig e t s
-inputBoxConfig id' placeholder = inputElementConfig_elementConfig . elementConfig_initialAttributes .~ [
-  ("id", id'),
-  ("class", "form-control"),
-  ("required", ""),
-  ("placeholder", placeholder)
-  ]
-
-passwordBoxConfig ∷ Text → Text → InputElementConfig e t s → InputElementConfig e t s
-passwordBoxConfig id' placeholder = inputElementConfig_elementConfig . elementConfig_initialAttributes .~ [
-  ("id", id'),
-  ("type", "password"),
-  ("class", "form-control"),
-  ("required", ""),
-  ("placeholder", placeholder)
-  ]
-
 dropdownConfig ∷ Reflex t => Text → Text → DropdownConfig t k → DropdownConfig t k
 dropdownConfig id' placeholder = \x -> x & attributes .~ constDyn [
   ("id", id'),
@@ -37,23 +21,43 @@ dropdownConfig id' placeholder = \x -> x & attributes .~ constDyn [
   ("required", ""),
   ("placeholder", placeholder)
   ]
+  
+data InputBoxOptions t m = InputBoxOptions {
+  inputBoxId :: Text,
+  inputBoxType :: Text,
+  inputBoxIcon :: Maybe (m ()),
+  inputBoxLabel :: Text,
+  inputBoxPlaceholder :: Text,
+  inputBoxConfigOptions :: InputElementConfig EventResult t (DomBuilderSpace m) → InputElementConfig EventResult t (DomBuilderSpace m)
+}
 
-inputBox ∷ (DomSpace s, MonadWidget t m) ⇒ Text → Text → Text →
-    (InputElementConfig EventResult t s → InputElementConfig EventResult t GhcjsDomSpace) →
-    m (InputElement EventResult (DomBuilderSpace m) t)
-inputBox id' label placeholder config = formGroup $ do
-  elAttr "label" [("for", id')] $ text label
-  inputElement $ def
-    & inputBoxConfig id' placeholder
-    & config
+instance Default (InputBoxOptions t m) where
+  def = InputBoxOptions {
+    inputBoxId = "",
+    inputBoxType = "text",
+    inputBoxIcon = Nothing,
+    inputBoxLabel = "",
+    inputBoxPlaceholder = "",
+    inputBoxConfigOptions = id
+  }
 
-passwordBox ∷ (DomSpace s, MonadWidget t m) ⇒ Text → Text → Text →
-    (InputElementConfig EventResult t s → InputElementConfig EventResult t (DomBuilderSpace m)) →
-    m (InputElement EventResult (DomBuilderSpace m) t)
-passwordBox id' label placeholder config = formGroup $ do
-  elAttr "label" [("for", id')] $ text label
+inputBox ∷ (MonadWidget t m) ⇒ InputBoxOptions t m → m (InputElement EventResult (DomBuilderSpace m) t)
+inputBox InputBoxOptions { inputBoxId = id', inputBoxType = inputType, inputBoxIcon = icon, inputBoxLabel = label, inputBoxPlaceholder = placeholder, inputBoxConfigOptions = config } = formGroup $ do
+  elAttr "label" [("for", id')] $ do
+    case icon of
+      Nothing -> blank
+      Just icon' -> do
+        icon'
+        text " "
+    text label
   inputElement $ def
-    & passwordBoxConfig id' placeholder
+    & inputElementConfig_elementConfig . elementConfig_initialAttributes .~ [
+        ("id", id'),
+        ("type", inputType),
+        ("class", "form-control"),
+        ("required", ""),
+        ("placeholder", placeholder)
+        ]
     & config
 
 dropdownBox ∷ (MonadWidget t m, Ord k) ⇒ Text → Text → k → Dynamic t (Map k Text) →

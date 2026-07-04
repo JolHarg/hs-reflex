@@ -11,10 +11,8 @@ type Title = Text
 type DefaultValue = Text
 type TabValue = Text
 type ButtonText = Text
-type Item m a = (TabValue, ButtonText, m a)
-type Items m a = [Item m a]
 
-bsTabbedNav ∷ (MonadWidget t m) ⇒ Title → DefaultValue → Items m a → m [a]
+bsTabbedNav ∷ (MonadWidget t m) ⇒ Title → DefaultValue → [(TabValue, ButtonText, m a)] → m [a]
 bsTabbedNav theTitle defaultVal items = mdo
     dNav <- holdDyn defaultVal eNavClick
     eNavClick <- elClass "nav" "navbar navbar-expand-lg bg-dark" $ do

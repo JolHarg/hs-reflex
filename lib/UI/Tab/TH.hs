@@ -22,7 +22,7 @@ import UI.Table.Companies
 
 widgetTH ∷ MonadWidget t m ⇒ Model → (Dynamic t (Map Text (Map Text Text)) →
   m (Dynamic t (Map Text (
-    Element EventResult (DomBuilderSpace m) t, [
+    Element EventResult s t, [
       (Event t (), Event t Text)
     ]
   )))) → m ()

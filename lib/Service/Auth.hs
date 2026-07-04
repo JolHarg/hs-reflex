@@ -14,6 +14,13 @@ login = client
     (Proxy :: Proxy ())
     (constDyn (BasePath "/api"))
 
+logout ∷ (MonadJSM (Performable m), PerformEvent t m, TriggerEvent t m) ⇒ Client t m LogoutAPI ()
+logout = client
+    (Proxy :: Proxy LogoutAPI)
+    (Proxy :: Proxy (m :: Type → Type))
+    (Proxy :: Proxy ())
+    (constDyn (BasePath "/api"))
+
 register ∷ (MonadJSM (Performable m), PerformEvent t m, TriggerEvent t m) ⇒ Client t m RegisterAPI ()
 register = client
     (Proxy :: Proxy RegisterAPI)
